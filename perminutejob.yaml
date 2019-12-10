@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: perminutejob
-            image: aggregationjobs
+            image: gcr.io/cudevops/aggregationjob
             env:
               - name: job_type
                 value: minutely

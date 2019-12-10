@@ -14,11 +14,11 @@ import uuid
 uuidUdf= F.udf(lambda : str(uuid.uuid4()),StringType())
 timestampUdf= F.udf(lambda : time_ns(),LongType())
 
-def run_job(jobtype, cassandra_ip_list):
+def run_job(jobtype, cassandra_ip):
     
     # export PYSPARK_DRIVER_PYTHON="/usr/local/bin/python3.7"
     # export PYSPARK_PYTHON="/usr/local/bin/python3.7"
-    cluster = Cluster(cassandra_ip_list)
+    cluster = Cluster([cassandra_ip])
     cassandra_session = cluster.connect('iot')
     batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM)
     cassandra_session.execute("""
@@ -77,9 +77,7 @@ if __name__=="__main__":
     try:
         job_type = sys.argv[1]
         print('Running job : {}'.format(job_type))
-        cassandra_ip_list = sys.argv[2];
-        cassandra_ip_list = cassandra_ip_list[1:-1]
-        cassandra_ip_list = cassandra_ip_list.split(',')
-        run_job(job_type, cassandra_ip_list)
+        cassandra_ip = sys.argv[2];
+        run_job(job_type, cassandra_ip)
     except Exception as e:
         print('Exception : {}'.format(e))

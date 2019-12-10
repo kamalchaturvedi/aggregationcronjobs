@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: perdayjob
-            image: aggregationjobs
+            image: gcr.io/cudevops/aggregationjob
             tag: latest
             imagePullPolicy: Always
             env:
