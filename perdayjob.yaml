@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: perdayjob
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: perdayjob
+            image: aggregationjobs
+            tag: latest
+            imagePullPolicy: Always
+            env:
+              - name: job_type
+                value: daily
+          restartPolicy: OnFailure

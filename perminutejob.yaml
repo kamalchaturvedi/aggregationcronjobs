@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: perminutejob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: perminutejob
+            image: aggregationjobs
+            env:
+              - name: job_type
+                value: minutely
+          restartPolicy: OnFailure
